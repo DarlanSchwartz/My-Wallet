@@ -1,20 +1,51 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import MyWalletLogo from "../components/MyWalletLogo"
+import { Singup } from "../requests";
+import { useRef } from "react";
 
 export default function SignUpPage() {
+  const email  = useRef();
+  const password  = useRef();
+  const password2  = useRef();
+  const name  = useRef();
+  
+  function singup(e)
+  {
+    e.preventDefault();
+
+    if(password.current.value !== password2.current.value)
+    {
+      alert('Os campos de senhas precisam ser iguais!');
+      return;
+    }
+
+    const userObj = {
+      name:name.current.value,
+      email:email.current.value,
+      password:password.current.value,
+    }
+
+    Singup(userObj,singupSucess);
+  }
+
+  function singupSucess(message,error)
+  {
+    if(error) return alert(message);
+  }
+
   return (
     <SingUpContainer>
-      <form>
+      <form onSubmit={singup}>
         <MyWalletLogo />
-        <input placeholder="Nome" type="text" />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autocomplete="new-password" />
-        <input placeholder="Confirme a senha" type="password" autocomplete="new-password" />
+        <input ref={name} required placeholder="Nome" type="text" />
+        <input ref={email} required placeholder="E-mail" type="email" />
+        <input ref={password} required placeholder="Senha" type="password" autoComplete='true' />
+        <input ref={password2} required placeholder="Confirme a senha" type="password" autoComplete='true' />
         <button>Cadastrar</button>
       </form>
 
-      <Link>
+      <Link to={'/'}>
         Já tem uma conta? Entre agora!
       </Link>
     </SingUpContainer>

@@ -1,37 +1,67 @@
 import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
+import { useEffect, useState } from "react"
+import { GetTransactions } from "../requests";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+
+  const [transactions,setTransactions] = useState([]);
+  const [user,setUser] = useState('UNDEFINED');
+  const [balance,setBalance] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  /*
+
+  */
+
+  useEffect(()=>{
+    GetTransactions(localStorage.getItem('token'),updateTransactions);
+    setUser(location.state.split(',')[0]);
+    setBalance(Number(location.state.split(',')[1]));
+  },[]);
+
+
+  function updateTransactions(transact,error)
+  {
+    if(error) return console.log(error.body);
+    
+    setTransactions(transact);
+  }
+
+  function logout()
+  {
+    localStorage.removeItem('token');
+    navigate('/');
+  }
+
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
-        <BiExit />
+        <h1>Olá, {user}</h1>
+        <BiExit onClick={logout} className="logout-btn"/>
       </Header>
 
       <TransactionsContainer>
         <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-          </ListItemContainer>
-
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-          </ListItemContainer>
+        {transactions && transactions.length > 0 && transactions.map(transaction => {
+            return (
+              <ListItemContainer>
+                <div>
+                  <span>{transaction.date}</span>
+                  <strong>{transaction.name}</strong>
+                </div>
+                <Value color={Number(transaction.value) < 0 ? "negativo" : "positivo"}>{transaction.value}</Value>
+              </ListItemContainer>
+            );
+          })}
         </ul>
 
         <article>
           <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
+          <Value color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2)}</Value>
         </article>
       </TransactionsContainer>
 
@@ -64,6 +94,9 @@ const Header = styled.header`
   margin-bottom: 15px;
   font-size: 26px;
   color: white;
+  .logout-btn{
+    cursor: pointer;
+  }
 `
 const TransactionsContainer = styled.article`
   flex-grow: 1;
