@@ -26,7 +26,7 @@ export default function HomePage() {
 
   function updateTransactions(transact,error)
   {
-    if(error) return console.log(error.body);
+    if(error) return console.log(transact);
     
     setTransactions(transact);
   }

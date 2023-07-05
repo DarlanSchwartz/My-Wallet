@@ -31,7 +31,7 @@ export default function SignUpPage() {
 
   function singupSucess(message,error)
   {
-    if(error) return alert(message);
+    if(error) return alert(message.response.data.message);
   }
 
   return (

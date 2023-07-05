@@ -27,11 +27,12 @@ export default function SignInPage() {
   {
     if(error)
     {
-      console.log(message.data.message);
-      return alert(message);
+      console.log(message);
+      return alert(message.response.data.message);
     }
 
     localStorage.setItem('token',message.data.token);
+    console.log(message.data);
     navigate('/home',{state:`${message.data.name},${message.data.balance}`});
   }
 
