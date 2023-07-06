@@ -52,7 +52,7 @@ export default function SignInPage() {
 }
 
 const SingInContainer = styled.section`
-  height: 100vh;
+  height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   justify-content: center;
