@@ -19,9 +19,9 @@ export default function TransactionsPage() {
 
   function transactionSucess(message,error)
   {
-    if(error) return alert(message.response.data.message);
+    if(error) return alert(message.response.message);
 
-    console.log('Sucesso ao enviar transação' + message.data.status)
+   console.log('Sucesso ao enviar transação');
   }
 
   return (

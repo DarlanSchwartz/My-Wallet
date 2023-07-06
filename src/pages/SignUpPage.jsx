@@ -41,7 +41,7 @@ export default function SignUpPage() {
         <input ref={name} required placeholder="Nome" type="text" name="name" id="name"/>
         <input ref={email} required placeholder="E-mail" type="email" name="email" id="email"/>
         <input ref={password} required placeholder="Senha" type="password" autoComplete='true' name="password" id="password"/>
-        <input ref={password2} required placeholder="Confirme a senha" type="password" autoComplete='true' name="password" id="password" />
+        <input ref={password2} required placeholder="Confirme a senha" type="password" autoComplete='true' name="password2" id="password2" />
         <button>Cadastrar</button>
       </form>
 

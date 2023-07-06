@@ -22,10 +22,9 @@ export function Singup(singupObj, callback) {
 
 
 export function GetTransactions(token, callback) {
-	const headers = { 'Authorization': `Bearer ${token}`}
-	axios.get(`${import.meta.env.VITE_API_URL}/home`, headers)
+	axios.get(`${import.meta.env.VITE_API_URL}/home`, {headers:{Authorization: `Bearer ${token}`}})
 		.then((res) => {
-			callback(res, false);
+			callback(res.data, false);
 		})
 		.catch((err) => {
 			callback(err, true);
@@ -33,10 +32,9 @@ export function GetTransactions(token, callback) {
 }
 
 export function NewTransaction(token, callback, type,transactionObj) {
-	const headers = { 'Authorization': `Bearer ${token}`}
-	axios.post(`${import.meta.env.VITE_API_URL}/nova-transacao/${type}`, transactionObj,headers)
+	axios.post(`${import.meta.env.VITE_API_URL}/nova-transacao/${type}`, transactionObj,{headers:{Authorization: `Bearer ${token}`}})
 	.then((res) => {
-		callback(res, false);
+		callback(res.data, false);
 	})
 	.catch((err) => {
 		callback(err, true);

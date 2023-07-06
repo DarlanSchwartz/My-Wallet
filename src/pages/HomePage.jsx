@@ -4,31 +4,28 @@ import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { useEffect, useState } from "react"
 import { GetTransactions } from "../requests";
 import { useLocation, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function HomePage() {
 
   const [transactions,setTransactions] = useState([]);
-  const [user,setUser] = useState('UNDEFINED');
+  const [user,setUser] = useState('Usuário');
   const [balance,setBalance] = useState(0);
-  const location = useLocation();
   const navigate = useNavigate();
-
-  /*
-
-  */
 
   useEffect(()=>{
     GetTransactions(localStorage.getItem('token'),updateTransactions);
-    setUser(location.state.split(',')[0]);
-    setBalance(Number(location.state.split(',')[1]));
   },[]);
 
 
-  function updateTransactions(transact,error)
+  function updateTransactions(userTransactions,error)
   {
-    if(error) return console.log(transact);
+    console.log(userTransactions);
+    if(error) return console.log(userTransactions);
     
-    setTransactions(transact);
+    setTransactions(userTransactions.transactions.reverse());
+    setUser(userTransactions.username);
+    setBalance(userTransactions.balance);
   }
 
   function logout()
@@ -48,17 +45,18 @@ export default function HomePage() {
         <ul>
         {transactions && transactions.length > 0 && transactions.map(transaction => {
             return (
-              <ListItemContainer>
+              <ListItemContainer key={uuidv4()}>
                 <div>
                   <span>{transaction.date}</span>
                   <strong>{transaction.description}</strong>
                 </div>
-                <Value color={transaction.type == 'out' ? "negativo" : "positivo"}>{transaction.value.toString().replace('.',',')}</Value>
+                <Value color={transaction.type == 'out' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
               </ListItemContainer>
             );
           })}
+         
         </ul>
-
+        {transactions && transactions.length == 0 && <p className="none-registries">Não há registros de entrada ou saída</p>}
         <article>
           <strong>Saldo</strong>
           <Value color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2).toString().replace('.',',')}</Value>
@@ -114,6 +112,10 @@ const TransactionsContainer = styled.article`
       font-weight: 700;
       text-transform: uppercase;
     }
+  }
+
+  .none-registries{
+    align-self: center;
   }
 `
 const ButtonsContainer = styled.section`
