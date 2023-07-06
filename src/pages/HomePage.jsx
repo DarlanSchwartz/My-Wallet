@@ -51,7 +51,7 @@ export default function HomePage() {
               <ListItemContainer>
                 <div>
                   <span>{transaction.date}</span>
-                  <strong>{transaction.name}</strong>
+                  <strong>{transaction.description}</strong>
                 </div>
                 <Value color={Number(transaction.value) < 0 ? "negativo" : "positivo"}>{transaction.value.toString().replace('.',',')}</Value>
               </ListItemContainer>
@@ -67,11 +67,11 @@ export default function HomePage() {
 
 
       <ButtonsContainer>
-        <button>
+        <button onClick={()=> navigate('/nova-transacao/in')}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
         </button>
-        <button>
+        <button onClick={()=> navigate('/nova-transacao/out')}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
         </button>
