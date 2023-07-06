@@ -20,7 +20,6 @@ export default function HomePage() {
 
   function updateTransactions(userTransactions,error)
   {
-    console.log(userTransactions);
     if(error) return console.log(userTransactions);
     
     setTransactions(userTransactions.transactions.reverse());
@@ -105,6 +104,11 @@ const TransactionsContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+ 
+  ul{
+    overflow-y: scroll;
+    max-height: 340px;
+  }
   article {
     display: flex;
     justify-content: space-between;   

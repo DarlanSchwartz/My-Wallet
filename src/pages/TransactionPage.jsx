@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import { NewTransaction } from "../requests";
@@ -8,13 +8,13 @@ export default function TransactionsPage() {
 
   const {tipo} = useParams(); // in || out
 
-  const value  = useRef();
+  const [value,setValue]  = useState(0);
   const description  = useRef();
 
   function newTransactionEvent(e)
   {
     e.preventDefault();
-    NewTransaction(localStorage.getItem('token'),transactionSucess,tipo,{value:value.current.value,description:description.current.value,date:dayjs().format('DD/MM')});
+    NewTransaction(localStorage.getItem('token'),transactionSucess,tipo,{value,description:description.current.value,date:dayjs().format('DD/MM')});
   }
 
   function transactionSucess(message,error)
@@ -28,7 +28,7 @@ export default function TransactionsPage() {
     <TransactionsContainer>
       <h1>Nova TRANSAÇÃO</h1>
       <form onSubmit={newTransactionEvent}>
-        <input ref={value} required placeholder="Valor" type="number" pattern="^[0-9.]+$"/>
+        <input value={value} onChange={(e)=> {setValue(e.target.value.replace(/[^0-9.]/g, ''))}} required placeholder="Valor" type="number" pattern="^[0-9.]+$"/>
         <input ref={description} required placeholder="Descrição" type="text" />
         <button>Salvar TRANSAÇÃO</button>
       </form>
