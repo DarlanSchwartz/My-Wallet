@@ -22,7 +22,8 @@ export function Singup(singupObj, callback) {
 
 
 export function GetTransactions(token, callback) {
-	axios.get(`${import.meta.env.VITE_API_URL}/home`, { headers: `Bearer ${token}` })
+	const headers = { 'Authorization': `Bearer ${token}`}
+	axios.get(`${import.meta.env.VITE_API_URL}/home`, headers)
 		.then((res) => {
 			callback(res, false);
 		})
@@ -32,7 +33,8 @@ export function GetTransactions(token, callback) {
 }
 
 export function NewTransaction(token, callback, type,transactionObj) {
-	axios.post(`${import.meta.env.VITE_API_URL}/nova-transacao/${type}`, transactionObj,{ headers: `Bearer ${token}` })
+	const headers = { 'Authorization': `Bearer ${token}`}
+	axios.post(`${import.meta.env.VITE_API_URL}/nova-transacao/${type}`, transactionObj,headers)
 	.then((res) => {
 		callback(res, false);
 	})

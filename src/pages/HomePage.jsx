@@ -53,7 +53,7 @@ export default function HomePage() {
                   <span>{transaction.date}</span>
                   <strong>{transaction.description}</strong>
                 </div>
-                <Value color={Number(transaction.value) < 0 ? "negativo" : "positivo"}>{transaction.value.toString().replace('.',',')}</Value>
+                <Value color={transaction.type == 'out' ? "negativo" : "positivo"}>{transaction.value.toString().replace('.',',')}</Value>
               </ListItemContainer>
             );
           })}
