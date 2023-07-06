@@ -1,8 +1,9 @@
-import styled from "styled-components"
-import { BiExit } from "react-icons/bi"
-import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
+import styled from "styled-components";
+import { BiExit } from "react-icons/bi";
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import {BsFillTrash3Fill} from "react-icons/bs";
 import { useEffect, useState } from "react"
-import { GetTransactions } from "../requests";
+import { DeleteTransaction, GetTransactions } from "../requests";
 import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -38,6 +39,24 @@ export default function HomePage() {
     navigate('/');
   }
 
+  function deleteTransaction(id)
+  {
+    if(window.confirm('Excluir registro de transação?')){
+      DeleteTransaction(localStorage.getItem('token'), finishDelete,id);
+    }
+  }
+
+  function finishDelete(message,error){
+    if(error) return console.log(message);
+    setTransactions(message.transactions.reverse());
+    setBalance(message.balance);
+  }
+
+  function editTransaction(id)
+  {
+    console.log(id);
+  }
+
   return (
     <HomeContainer>
       <Header>
@@ -52,9 +71,12 @@ export default function HomePage() {
               <ListItemContainer key={uuidv4()}>
                 <div>
                   <span>{transaction.date}</span>
-                  <strong data-test="registry-name">{transaction.description}</strong>
+                  <strong onClick={()=> editTransaction(transaction.id)} data-test="registry-name">{transaction.description}</strong>
                 </div>
-                <Value data-test="registry-amount" color={transaction.type == 'saida' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
+                <div className="value-delete-container">
+                  <Value data-test="registry-amount" color={transaction.type == 'saida' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
+                  <BsFillTrash3Fill data-test="registry-delete" className="delete-btn" onClick={()=>deleteTransaction(transaction.id)}/>
+                </div>
               </ListItemContainer>
             );
           })}
@@ -166,5 +188,27 @@ const ListItemContainer = styled.li`
   div span {
     color: #c6c6c6;
     margin-right: 10px;
+  }
+
+  div strong{
+    cursor: pointer;
+    &:hover{
+      color: #8c11be;
+    }
+  }
+
+  .value-delete-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .delete-btn{
+      cursor: pointer;
+      transition: all 200ms;
+      &:hover{
+        color: #8c11be;
+      }
+    }
   }
 `

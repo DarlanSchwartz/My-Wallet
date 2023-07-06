@@ -40,3 +40,13 @@ export function NewTransaction(token, callback, type,transactionObj) {
 		callback(err, true);
 	});
 }
+
+export function DeleteTransaction(token, callback,id) {
+	axios.delete(`${import.meta.env.VITE_API_URL}/deletar-registro/${id}`,{headers:{Authorization: `Bearer ${token}`}})
+	.then((res) => {
+		callback(res.data, false);
+	})
+	.catch((err) => {
+		callback(err, true);
+	});
+}
