@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { NewTransaction } from "../requests";
 import dayjs from "dayjs";
@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 export default function TransactionsPage() {
 
   const {tipo} = useParams(); // in || out
-
+  const navigate = useNavigate();
   const [value,setValue]  = useState('');
   const description  = useRef();
 
@@ -26,7 +26,8 @@ export default function TransactionsPage() {
   {
     if(error) return alert(message.response.message);
 
-   console.log('Sucesso ao enviar transação');
+    console.log('Sucesso ao enviar transação');
+    navigate('/home');
   }
 
   return (
