@@ -31,11 +31,11 @@ export default function TransactionsPage() {
 
   return (
     <TransactionsContainer>
-      <h1>Nova {tipo == 'in'? 'entrada' : 'saída'}</h1>
+      <h1>Nova {tipo == 'entrada'? 'entrada' : 'saída'}</h1>
       <form onSubmit={newTransactionEvent}>
         <input data-test="registry-amount-input" value={value} onChange={(e)=> {setValue(e.target.value.replace(/[^0-9.]/g, ''))}} required placeholder="Valor" type="number" pattern="^[0-9.]+$"/>
         <input data-test="registry-name-input" ref={description} required placeholder="Descrição" type="text" />
-        <button data-test="registry-save" >Salvar {tipo == 'in'? 'entrada' : 'saída'}</button>
+        <button data-test="registry-save" >Salvar {tipo == 'entrada'? 'entrada' : 'saída'}</button>
       </form>
     </TransactionsContainer>
   )

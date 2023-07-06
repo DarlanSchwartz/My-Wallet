@@ -54,7 +54,7 @@ export default function HomePage() {
                   <span>{transaction.date}</span>
                   <strong data-test="registry-name">{transaction.description}</strong>
                 </div>
-                <Value data-test="registry-amount" color={transaction.type == 'out' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
+                <Value data-test="registry-amount" color={transaction.type == 'saida' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
               </ListItemContainer>
             );
           })}
@@ -69,11 +69,11 @@ export default function HomePage() {
 
 
       <ButtonsContainer>
-        <button data-test="new-income" onClick={()=> navigate('/nova-transacao/in')}>
+        <button data-test="new-income" onClick={()=> navigate('/nova-transacao/entrada')}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
         </button>
-        <button data-test="new-expense" onClick={()=> navigate('/nova-transacao/out')}>
+        <button data-test="new-expense" onClick={()=> navigate('/nova-transacao/saida')}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
         </button>
