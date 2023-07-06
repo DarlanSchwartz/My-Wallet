@@ -107,12 +107,12 @@ const TransactionsContainer = styled.article`
  
   ul{
     overflow-y: scroll;
-    max-height: 340px;
-    min-height: 340px;
+    max-height: 650px;
+    min-height: 650px;
   }
 
   ul::-webkit-scrollbar {
-  display: ${(props) => props.len <= 13 ? 'none' : 'auto'}; /* Oculta a barra de rolagem */
+  display: ${(props) => props.len <= 27 ? 'none' : 'auto'}; /* Oculta a barra de rolagem */
 }
   article {
     display: flex;
