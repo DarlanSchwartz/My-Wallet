@@ -108,6 +108,7 @@ const TransactionsContainer = styled.article`
   ul{
     overflow-y: scroll;
     max-height: 340px;
+    min-height: 340px;
   }
 
   ul::-webkit-scrollbar {
