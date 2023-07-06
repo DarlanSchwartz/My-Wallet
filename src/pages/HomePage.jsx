@@ -14,6 +14,10 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   useEffect(()=>{
+    if(localStorage.getItem('token') == undefined){
+      navigate('/');
+      return;
+    }
     GetTransactions(localStorage.getItem('token'),updateTransactions);
   },[]);
 
@@ -21,6 +25,7 @@ export default function HomePage() {
   function updateTransactions(userTransactions,error)
   {
     if(error) return console.log(userTransactions);
+    
     
     setTransactions(userTransactions.transactions.reverse());
     setUser(userTransactions.username);

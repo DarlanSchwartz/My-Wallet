@@ -11,6 +11,11 @@ export default function TransactionsPage() {
   const [value,setValue]  = useState();
   const description  = useRef();
 
+  useEffect(()=>{
+    if(localStorage.getItem('token') == undefined) navigate('/');
+    return;
+  },[])
+
   function newTransactionEvent(e)
   {
     e.preventDefault();
