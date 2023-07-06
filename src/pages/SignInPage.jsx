@@ -25,7 +25,6 @@ export default function SignInPage() {
 
   function loginSucess(message,error)
   {
-    console.log(message);
     if(error)
     {
       console.log(message);
@@ -33,7 +32,6 @@ export default function SignInPage() {
     }
 
     localStorage.setItem('token',message.data.token);
-    console.log(message.data);
     navigate('/home',{state:`${message.data.name},${message.data.balance}`});
   }
 

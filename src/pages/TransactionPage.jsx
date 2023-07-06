@@ -8,7 +8,7 @@ export default function TransactionsPage() {
 
   const {tipo} = useParams(); // in || out
 
-  const [value,setValue]  = useState(0);
+  const [value,setValue]  = useState();
   const description  = useRef();
 
   function newTransactionEvent(e)

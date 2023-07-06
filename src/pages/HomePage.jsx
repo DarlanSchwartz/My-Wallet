@@ -40,7 +40,7 @@ export default function HomePage() {
         <BiExit onClick={logout} className="logout-btn"/>
       </Header>
 
-      <TransactionsContainer>
+      <TransactionsContainer len={transactions.length}>
         <ul>
         {transactions && transactions.length > 0 && transactions.map(transaction => {
             return (
@@ -109,6 +109,10 @@ const TransactionsContainer = styled.article`
     overflow-y: scroll;
     max-height: 340px;
   }
+
+  ul::-webkit-scrollbar {
+  display: ${(props) => props.len <= 13 ? 'none' : 'auto'}; /* Oculta a barra de rolagem */
+}
   article {
     display: flex;
     justify-content: space-between;   
