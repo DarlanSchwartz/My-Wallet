@@ -47,7 +47,7 @@ export default function HomePage() {
   }
 
   function finishDelete(message,error){
-    if(error) return console.log(message);
+    if(error) return alert(message.data.response.message);
     setTransactions(message.transactions.reverse());
     setBalance(message.balance);
   }
