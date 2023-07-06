@@ -25,6 +25,7 @@ export default function SignInPage() {
 
   function loginSucess(message,error)
   {
+    console.log(message);
     if(error)
     {
       console.log(message);
@@ -40,8 +41,8 @@ export default function SignInPage() {
     <SingInContainer>
       <form onSubmit={login}>
         <MyWalletLogo />
-          <input required placeholder="E-mail" type="email" ref={email} autoComplete="true"/>
-          <input required placeholder="Senha" type="password" autoComplete = 'true' ref={password}/>
+          <input required placeholder="E-mail" type="email" ref={email} autoComplete="true" name="email" id="email"/>
+          <input required placeholder="Senha" type="password" autoComplete = 'true' ref={password} name="password" id="password"/>
           <button>Entrar</button>
       </form>
 

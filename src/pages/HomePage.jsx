@@ -53,7 +53,7 @@ export default function HomePage() {
                   <span>{transaction.date}</span>
                   <strong>{transaction.name}</strong>
                 </div>
-                <Value color={Number(transaction.value) < 0 ? "negativo" : "positivo"}>{transaction.value}</Value>
+                <Value color={Number(transaction.value) < 0 ? "negativo" : "positivo"}>{transaction.value.toString().replace('.',',')}</Value>
               </ListItemContainer>
             );
           })}
@@ -61,7 +61,7 @@ export default function HomePage() {
 
         <article>
           <strong>Saldo</strong>
-          <Value color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2)}</Value>
+          <Value color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2).toString().replace('.',',')}</Value>
         </article>
       </TransactionsContainer>
 
