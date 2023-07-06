@@ -41,8 +41,8 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, {user}</h1>
-        <BiExit onClick={logout} className="logout-btn"/>
+        <h1 data-test="user-name">Olá, {user}</h1>
+        <BiExit  data-test="logout" onClick={logout} className="logout-btn"/>
       </Header>
 
       <TransactionsContainer len={transactions.length}>
@@ -52,9 +52,9 @@ export default function HomePage() {
               <ListItemContainer key={uuidv4()}>
                 <div>
                   <span>{transaction.date}</span>
-                  <strong>{transaction.description}</strong>
+                  <strong data-test="registry-name">{transaction.description}</strong>
                 </div>
-                <Value color={transaction.type == 'out' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
+                <Value data-test="registry-amount" color={transaction.type == 'out' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
               </ListItemContainer>
             );
           })}
@@ -63,17 +63,17 @@ export default function HomePage() {
         {transactions && transactions.length == 0 && <p className="none-registries">Não há registros de entrada ou saída</p>}
         <article>
           <strong>Saldo</strong>
-          <Value color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2).toString().replace('.',',')}</Value>
+          <Value data-test="total-amount" color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2).toString().replace('.',',')}</Value>
         </article>
       </TransactionsContainer>
 
 
       <ButtonsContainer>
-        <button onClick={()=> navigate('/nova-transacao/in')}>
+        <button data-test="new-income" onClick={()=> navigate('/nova-transacao/in')}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
         </button>
-        <button onClick={()=> navigate('/nova-transacao/out')}>
+        <button data-test="new-expense" onClick={()=> navigate('/nova-transacao/out')}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
         </button>
