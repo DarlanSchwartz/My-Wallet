@@ -52,9 +52,9 @@ export default function HomePage() {
     setBalance(message.balance);
   }
 
-  function editTransaction(id)
+  function editTransaction(id,tipo,value,description)
   {
-    console.log(id);
+    navigate(`/editar-registro/${tipo}/${id}`,{state:`${value},${description}`})
   }
 
   return (
@@ -71,7 +71,7 @@ export default function HomePage() {
               <ListItemContainer key={uuidv4()}>
                 <div>
                   <span>{transaction.date}</span>
-                  <strong onClick={()=> editTransaction(transaction.id)} data-test="registry-name">{transaction.description}</strong>
+                  <strong onClick={()=> editTransaction(transaction.id,transaction.type,transaction.value,transaction.description)} data-test="registry-name">{transaction.description}</strong>
                 </div>
                 <div className="value-delete-container">
                   <Value data-test="registry-amount" color={transaction.type == 'saida' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>

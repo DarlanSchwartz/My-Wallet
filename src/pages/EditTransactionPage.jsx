@@ -1,42 +1,45 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
-import { NewTransaction } from "../requests";
+import { EditTransaction } from "../requests";
 import dayjs from "dayjs";
 
-export default function TransactionsPage() {
+export default function EditTransactionPage() {
 
-  const {tipo} = useParams(); // in || out
+  const {tipo,id} = useParams(); // in || out
   const navigate = useNavigate();
   const [value,setValue]  = useState('');
   const description  = useRef();
+  const location = useLocation();
 
   useEffect(()=>{
-    if(localStorage.getItem('token') == undefined) navigate('/');
-    return;
+    if(localStorage.getItem('token') == undefined) return navigate('/');
+
+    setValue(location.state.split(',')[0]);
+    description.current.value = location.state.split(',')[1];
   },[])
 
-  function newTransactionEvent(e)
+  function editTransactionEvent(e)
   {
     e.preventDefault();
-    NewTransaction(localStorage.getItem('token'),transactionSucess,tipo,{value,description:description.current.value,date:dayjs().format('DD/MM')});
+    EditTransaction(localStorage.getItem('token'),transactionSucess,id,{value,description:description.current.value});
   }
 
   function transactionSucess(message,error)
   {
-    if(error) return alert(message.response.data.message);
+    if(error) return alert(message.response.data);
 
-    console.log('Sucesso ao enviar transação');
+    console.log('Sucesso ao editar transação');
     navigate('/home');
   }
 
   return (
     <TransactionsContainer>
-      <h1>Nova {tipo == 'entrada'? 'entrada' : 'saída'}</h1>
-      <form onSubmit={newTransactionEvent}>
+      <h1>Editar {tipo == 'entrada'? 'entrada' : 'saída'}</h1>
+      <form onSubmit={editTransactionEvent}>
         <input data-test="registry-amount-input" value={value} onChange={(e)=> {setValue(e.target.value.replace(/[^0-9.-]/g, ''))}} required placeholder="Valor" type="text"/>
         <input data-test="registry-name-input" ref={description} required placeholder="Descrição" type="text" />
-        <button data-test="registry-save" >Salvar {tipo == 'entrada'? 'entrada' : 'saída'}</button>
+        <button data-test="registry-save" >Atualizar {tipo == 'entrada'? 'entrada' : 'saída'}</button>
       </form>
     </TransactionsContainer>
   )

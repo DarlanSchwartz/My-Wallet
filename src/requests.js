@@ -50,3 +50,13 @@ export function DeleteTransaction(token, callback,id) {
 		callback(err, true);
 	});
 }
+
+export function EditTransaction(token, callback, id,newValues) {
+	axios.put(`${import.meta.env.VITE_API_URL}/editar-registro/${id}`, newValues,{headers:{Authorization: `Bearer ${token}`}})
+	.then((res) => {
+		callback(res.data, false);
+	})
+	.catch((err) => {
+		callback(err, true);
+	});	
+}
