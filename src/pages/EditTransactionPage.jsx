@@ -3,6 +3,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { EditTransaction } from "../requests";
 import dayjs from "dayjs";
+import { ThreeDots } from 'react-loader-spinner';
+import { toast } from "react-toastify";
+
 
 export default function EditTransactionPage() {
 
@@ -12,6 +15,7 @@ export default function EditTransactionPage() {
   const description  = useRef();
   const location = useLocation();
   const [id,setId] = useState();
+  const [loading,setLoading] = useState(false);
 
   useEffect(()=>{
     if(localStorage.getItem('token') == undefined) return navigate('/');
@@ -24,14 +28,24 @@ export default function EditTransactionPage() {
   function editTransactionEvent(e)
   {
     e.preventDefault();
+    setLoading(true);
     EditTransaction(localStorage.getItem('token'),transactionSucess,id,{value,description:description.current.value},tipo);
   }
 
   function transactionSucess(message,error)
   {
+    setLoading(false);
     if(error) return alert(message.response.data);
-
-    console.log('Sucesso ao editar transação');
+    toast.success( 'Sucesso ao editar transação!', {
+      position: "bottom-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+      });
     navigate('/home');
   }
 
@@ -41,7 +55,7 @@ export default function EditTransactionPage() {
       <form onSubmit={editTransactionEvent}>
         <input data-test="registry-amount-input" value={value} onChange={(e)=> {setValue(e.target.value.replace(/[^0-9.-]/g, ''))}} required placeholder="Valor" type="text"/>
         <input data-test="registry-name-input" ref={description} required placeholder="Descrição" type="text" />
-        <button data-test="registry-save" >Atualizar {tipo == 'entrada'? 'entrada' : 'saída'}</button>
+        <button className="update-btn" data-test="registry-save" >{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Atualizar '}{!loading && (tipo == 'entrada'? 'entrada' : 'saída')}</button>
       </form>
     </TransactionsContainer>
   )
@@ -57,5 +71,13 @@ const TransactionsContainer = styled.main`
   h1 {
     align-self: flex-start;
     margin-bottom: 40px;
+  }
+
+  form {
+    .update-btn{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `

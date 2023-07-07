@@ -44,6 +44,9 @@ const ResetStyle = createGlobalStyle`
 		border-collapse: collapse;
 		border-spacing: 0;
 	}
+	.Toastify__close-button{
+		width: auto;
+	}
 `
 
 export default ResetStyle

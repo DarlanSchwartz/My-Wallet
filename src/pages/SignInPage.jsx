@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import MyWalletLogo from "../components/MyWalletLogo";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Login } from "../requests";
+import { ThreeDots } from 'react-loader-spinner';
 
 
 export default function SignInPage() {
@@ -10,7 +11,8 @@ export default function SignInPage() {
   const email  = useRef();
   const password  = useRef();
   const navigate = useNavigate();
-  
+  const [loading,setLoading] = useState(false);
+
   function login(e)
   {
     e.preventDefault();
@@ -19,12 +21,13 @@ export default function SignInPage() {
       email:email.current.value.toString(),
       password:password.current.value.toString()
     }
-
+    setLoading(true);
     Login(userObj,loginSucess);
   }
 
   function loginSucess(message,error)
   {
+    setLoading(false);
     if(error)
     {
       console.log(message);
@@ -41,7 +44,7 @@ export default function SignInPage() {
         <MyWalletLogo />
           <input data-test="email" required placeholder="E-mail" type="email" ref={email} autoComplete="true" name="email" id="email"/>
           <input data-test="password" required placeholder="Senha" type="password" autoComplete = 'true' ref={password} name="password" id="password"/>
-          <button data-test="sign-in-submit">Entrar</button>
+          <button className="sign-in-btn" data-test="sign-in-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Entrar'}</button>
       </form>
 
       <Link to={'/cadastro'}>
@@ -57,4 +60,11 @@ const SingInContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  form {
+    .sign-in-btn{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 `

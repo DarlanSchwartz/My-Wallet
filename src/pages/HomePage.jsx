@@ -80,9 +80,9 @@ export default function HomePage() {
               </ListItemContainer>
             );
           })}
-         
+          {transactions && transactions.length == 0 && <p className="none-registries">Não há registros de entrada ou saída</p>}
         </ul>
-        {transactions && transactions.length == 0 && <p className="none-registries">Não há registros de entrada ou saída</p>}
+       
         <article>
           <strong>Saldo</strong>
           <Value data-test="total-amount" color={balance < 0 ? "negativo": "positivo"}>{balance.toFixed(2).toString().replace('.',',')}</Value>
@@ -120,6 +120,10 @@ const Header = styled.header`
   color: white;
   .logout-btn{
     cursor: pointer;
+    transition: all 200ms;
+    &:hover{
+      color: #c29cd3;
+    }
   }
 `
 const TransactionsContainer = styled.article`
@@ -151,7 +155,12 @@ const TransactionsContainer = styled.article`
   }
 
   .none-registries{
-    align-self: center;
+    position: absolute;
+    width: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    
   }
 `
 const ButtonsContainer = styled.section`

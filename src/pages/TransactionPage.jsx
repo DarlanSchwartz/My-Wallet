@@ -3,12 +3,15 @@ import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { NewTransaction } from "../requests";
 import dayjs from "dayjs";
+import { ThreeDots } from 'react-loader-spinner';
+import { toast } from "react-toastify";
 
 export default function TransactionsPage() {
 
   const {tipo} = useParams(); // in || out
   const navigate = useNavigate();
   const [value,setValue]  = useState('');
+  const [loading,setLoading] = useState(false);
   const description  = useRef();
 
   useEffect(()=>{
@@ -19,6 +22,7 @@ export default function TransactionsPage() {
   function newTransactionEvent(e)
   {
     e.preventDefault();
+    setLoading(true);
     NewTransaction(localStorage.getItem('token'),transactionSucess,tipo,{value,description:description.current.value,date:dayjs().format('DD/MM')});
   }
 
@@ -26,6 +30,16 @@ export default function TransactionsPage() {
   {
     if(error) return alert(message.response.data.message);
 
+    toast.success( 'Sucesso ao enviar transação!', {
+      position: "bottom-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+      });
     console.log('Sucesso ao enviar transação');
     navigate('/home');
   }
@@ -36,7 +50,7 @@ export default function TransactionsPage() {
       <form onSubmit={newTransactionEvent}>
         <input data-test="registry-amount-input" value={value} onChange={(e)=> {setValue(e.target.value.replace(/[^0-9.-]/g, ''))}} required placeholder="Valor" type="text"/>
         <input data-test="registry-name-input" ref={description} required placeholder="Descrição" type="text" />
-        <button data-test="registry-save" >Salvar {tipo == 'entrada'? 'entrada' : 'saída'}</button>
+        <button className="save-btn" data-test="registry-save" >{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Salvar '}{!loading && (tipo == 'entrada'? 'entrada' : 'saída')}</button>
       </form>
     </TransactionsContainer>
   )
@@ -52,5 +66,13 @@ const TransactionsContainer = styled.main`
   h1 {
     align-self: flex-start;
     margin-bottom: 40px;
+  }
+
+  form {
+    .save-btn{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `
