@@ -6,16 +6,18 @@ import dayjs from "dayjs";
 
 export default function EditTransactionPage() {
 
-  const {tipo,id} = useParams(); // in || out
+  const {tipo} = useParams(); // in || out
   const navigate = useNavigate();
   const [value,setValue]  = useState('');
   const description  = useRef();
   const location = useLocation();
+  const [id,setId] = useState();
 
   useEffect(()=>{
     if(localStorage.getItem('token') == undefined) return navigate('/');
 
     setValue(location.state.split(',')[0]);
+    setId(location.state.split(',')[2]);
     description.current.value = location.state.split(',')[1];
   },[])
 
