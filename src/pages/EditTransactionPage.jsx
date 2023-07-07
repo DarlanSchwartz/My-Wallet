@@ -24,7 +24,7 @@ export default function EditTransactionPage() {
   function editTransactionEvent(e)
   {
     e.preventDefault();
-    EditTransaction(localStorage.getItem('token'),transactionSucess,id,{value,description:description.current.value});
+    EditTransaction(localStorage.getItem('token'),transactionSucess,id,{value,description:description.current.value},tipo);
   }
 
   function transactionSucess(message,error)
