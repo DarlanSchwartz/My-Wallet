@@ -13,12 +13,12 @@ The application is deployed using Vercel as the frontend server.
 
 ## You can test the app at https://my-wallet-mu-ten.vercel.app/
 
-[<img width='240px' src="./screenshots/screenshot1.PNG" align="left"/>](https://my-wallet-mu-ten.vercel.app/)
+[<img width='240px' src="./screenshots/screenshot1.png" align="left"/>](https://my-wallet-mu-ten.vercel.app/)
 
-[<img width='240px' src="./screenshots/screenshot2.PNG" align="left"/>](https://my-wallet-mu-ten.vercel.app/)
+[<img width='240px' src="./screenshots/screenshot2.png" align="left"/>](https://my-wallet-mu-ten.vercel.app/)
 
 
-[<img width='240px' src="./screenshots/screenshot3.PNG" align="left"/>](https://my-wallet-mu-ten.vercel.app/)
+[<img width='240px' src="./screenshots/screenshot3.png" align="left"/>](https://my-wallet-mu-ten.vercel.app/)
 
 
 
