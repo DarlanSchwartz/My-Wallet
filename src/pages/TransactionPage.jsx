@@ -40,7 +40,6 @@ export default function TransactionsPage() {
       progress: undefined,
       theme: "colored",
       });
-    console.log('Sucesso ao enviar transação');
     navigate('/home');
   }
 

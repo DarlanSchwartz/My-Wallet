@@ -185,7 +185,7 @@ const ButtonsContainer = styled.section`
 const Value = styled.div`
   font-size: 16px;
   text-align: right;
-  color: ${(props) => (props.color === "positivo" ? "green" : "red")};
+  color: ${(props) => (props.color === "positivo" ? "rgb(24, 224, 24)" : "rgb(255, 26, 26)")};
 `
 const ListItemContainer = styled.li`
   display: flex;
