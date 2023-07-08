@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { DeleteTransaction, GetTransactions } from "../requests";
 import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from "react-toastify";
 
 export default function HomePage() {
 
@@ -50,6 +51,17 @@ export default function HomePage() {
     if(error) return alert(message.data.response.message);
     setTransactions(message.transactions.reverse());
     setBalance(message.balance);
+    
+    toast.error( 'Transação removida com sucesso!', {
+      position: "bottom-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+      });
   }
 
   function editTransaction(id,tipo,value,description)
