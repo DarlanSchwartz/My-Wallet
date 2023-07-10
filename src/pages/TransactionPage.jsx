@@ -31,9 +31,9 @@ export default function TransactionsPage() {
     if(error) return alert(message.response.data.message);
 
     toast.success( 'Sucesso ao enviar transação!', {
-      position: "bottom-left",
+      position: "top-center",
       autoClose: 1000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,
       draggable: false,
@@ -49,7 +49,7 @@ export default function TransactionsPage() {
       <form onSubmit={newTransactionEvent}>
         <input data-test="registry-amount-input" value={value} onChange={(e)=> {setValue(e.target.value.replace(/[^0-9.-]/g, ''))}} required placeholder="Valor" type="text"/>
         <input data-test="registry-name-input" ref={description} required placeholder="Descrição" type="text" />
-        <button className="save-btn" data-test="registry-save" >{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Salvar '}{!loading && (tipo == 'entrada'? 'entrada' : 'saída')}</button>
+        <button disabled={loading} className="save-btn" data-test="registry-save" >{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Salvar '}{!loading && (tipo == 'entrada'? 'entrada' : 'saída')}</button>
       </form>
     </TransactionsContainer>
   )
@@ -72,6 +72,7 @@ const TransactionsContainer = styled.main`
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
     }
   }
 `

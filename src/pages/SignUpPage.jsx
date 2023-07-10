@@ -12,6 +12,7 @@ export default function SignUpPage() {
   const password  = useRef();
   const password2  = useRef();
   const name  = useRef();
+  const navigate = useNavigate();
   const [loading,setLoading] = useState(false);
   
   function singup(e)
@@ -38,16 +39,18 @@ export default function SignUpPage() {
     setLoading(false);
     if(error) return alert(message.response.data.message);
 
-    toast.success( 'Cadastrado com sucesso!', {
-      position: "bottom-left",
+    toast.info( 'Cadastrado com sucesso!', {
+      position: "top-center",
       autoClose: 5000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,
       draggable: false,
       progress: undefined,
       theme: "colored",
       });
+
+      navigate('/');
   }
 
   return (
@@ -58,7 +61,7 @@ export default function SignUpPage() {
         <input data-test="email" ref={email} required placeholder="E-mail" type="email" name="email" id="email"/>
         <input data-test="password" ref={password} required placeholder="Senha" type="password" autoComplete='true' name="password" id="password" minLength={3}/>
         <input data-test="conf-password" ref={password2} required placeholder="Confirme a senha" type="password" autoComplete='true' name="password2" id="password2" minLength={3}/>
-        <button className="sign-up-btn" data-test="sign-up-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Cadastrar'}</button>
+        <button disabled={loading} className="sign-up-btn" data-test="sign-up-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Cadastrar'}</button>
       </form>
 
       <Link to={'/'}>
@@ -80,6 +83,7 @@ const SingUpContainer = styled.section`
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
     }
   }
 `

@@ -15,11 +15,21 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 600;
         color: #fff;
         cursor: pointer;
-        width: 100%;
+        
         padding: 12px;
         transition: all 200ms;
-        &:hover{
-            background-color: #bd7ada;
+        &:enabled
+        {
+            &:hover
+            {
+                background-color: #bd7ada;
+            }
+        }
+        
+        &:disabled
+        {
+            cursor: not-allowed;
+            background-color: #eab4ff;
         }
     }
     h1 {

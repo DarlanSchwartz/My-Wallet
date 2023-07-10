@@ -44,7 +44,7 @@ export default function SignInPage() {
         <MyWalletLogo />
           <input data-test="email" required placeholder="E-mail" type="email" ref={email} autoComplete="true" name="email" id="email"/>
           <input data-test="password" required placeholder="Senha" type="password" autoComplete = 'true' ref={password} name="password" id="password"/>
-          <button className="sign-in-btn" data-test="sign-in-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Entrar'}</button>
+          <button disabled={loading} className="sign-in-btn" data-test="sign-in-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Entrar'}</button>
       </form>
 
       <Link to={'/cadastro'}>
@@ -65,6 +65,8 @@ const SingInContainer = styled.section`
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
     }
+   
   }
 `

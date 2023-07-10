@@ -4,9 +4,11 @@ import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import {BsFillTrash3Fill} from "react-icons/bs";
 import { useEffect, useState } from "react"
 import { DeleteTransaction, GetTransactions } from "../requests";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import trashIcon from '/trash.png';
 
 export default function HomePage() {
 
@@ -26,9 +28,12 @@ export default function HomePage() {
 
   function updateTransactions(userTransactions,error)
   {
-    if(error) return console.log(userTransactions);
+    if(error){
+      console.log(userTransactions);
+      return;
+    }
     
-    
+    console.log(`Sucess getting ${userTransactions.username} info.`);
     setTransactions(userTransactions.transactions.reverse());
     setUser(userTransactions.username);
     setBalance(userTransactions.balance);
@@ -36,15 +41,47 @@ export default function HomePage() {
 
   function logout()
   {
-    localStorage.removeItem('token');
-    navigate('/');
+    Swal.fire({
+      title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:white">Deseja sair?</span>`,
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#8c11be',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      width: 300,
+      heightAuto: false,
+      imageUrl: trashIcon,
+      imageWidth: 100,
+      imageHeight: 100,
+      background:'#1f1f1f',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('token');
+        navigate('/');
+      }
+    });
   }
 
-  function deleteTransaction(id)
+  function deleteTransaction(id,name)
   {
-    if(window.confirm('Excluir registro de transação?')){
-      DeleteTransaction(localStorage.getItem('token'), finishDelete,id);
-    }
+    Swal.fire({
+      title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:white">Remover ${name}?</span>`,
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#8c11be',
+      confirmButtonText: 'Remover',
+      cancelButtonText: 'Cancelar',
+      width: 300,
+      heightAuto: false,
+      imageUrl: trashIcon,
+      imageWidth: 100,
+      imageHeight: 100,
+      background:'#1f1f1f'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        DeleteTransaction(localStorage.getItem('token'), finishDelete,id);
+      }
+    });
   }
 
   function finishDelete(message,error){
@@ -53,9 +90,9 @@ export default function HomePage() {
     setBalance(message.balance);
     
     toast.error( 'Transação removida com sucesso!', {
-      position: "bottom-left",
+      position: "top-center",
       autoClose: 1000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,
       draggable: false,
@@ -73,7 +110,7 @@ export default function HomePage() {
     <HomeContainer>
       <Header>
         <h1 data-test="user-name">Olá, {user}</h1>
-        <BiExit  data-test="logout" onClick={logout} className="logout-btn"/>
+        <BiExit data-test="logout" onClick={logout} className="logout-btn"/>
       </Header>
 
       <TransactionsContainer len={transactions.length}>
@@ -87,7 +124,7 @@ export default function HomePage() {
                 </div>
                 <div className="value-delete-container">
                   <Value data-test="registry-amount" color={transaction.type == 'saida' ? "negativo" : "positivo"}>{Number(transaction.value).toFixed(2).toString().replace('.',',')}</Value>
-                  <BsFillTrash3Fill data-test="registry-delete" className="delete-btn" onClick={()=>deleteTransaction(transaction.id)}/>
+                  <BsFillTrash3Fill data-test="registry-delete" className="delete-btn" onClick={()=>deleteTransaction(transaction.id,transaction.description)}/>
                 </div>
               </ListItemContainer>
             );
@@ -151,7 +188,7 @@ const TransactionsContainer = styled.article`
   ul{
     overflow-y: scroll;
     max-height: 650px;
-    min-height: 650px;
+    min-height: 350px;
   }
 
   ul::-webkit-scrollbar {
