@@ -10,11 +10,12 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import trashIcon from '/trash.png';
 import logoutIcon from '/logout.svg';
+import userIcon from '/userIcon.svg';
 
 export default function HomePage() {
 
   const [transactions,setTransactions] = useState([]);
-  const [user,setUser] = useState('Usuário');
+  const [user,setUser] = useState('');
   const [balance,setBalance] = useState(0);
   const navigate = useNavigate();
 
@@ -30,11 +31,11 @@ export default function HomePage() {
   function updateTransactions(userTransactions,error)
   {
     if(error){
-      console.log(userTransactions);
+      alert(userTransactions.data.response.message);
       return;
     }
     
-    console.log(`Sucess getting ${userTransactions.username} info.`);
+    //console.log(`Sucess getting ${userTransactions.username} info.`);
     setTransactions(userTransactions.transactions.reverse());
     setUser(userTransactions.username);
     setBalance(userTransactions.balance);
@@ -45,7 +46,7 @@ export default function HomePage() {
     Swal.fire({
       title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:black">Deseja sair?</span>`,
       showCancelButton: true,
-      confirmButtonColor: '#d33',
+      confirmButtonColor: '#c9c9c9',
       cancelButtonColor: '#8c11be',
       confirmButtonText: 'Sim',
       cancelButtonText: 'Cancelar',
@@ -65,9 +66,9 @@ export default function HomePage() {
   function deleteTransaction(id,name)
   {
     Swal.fire({
-      title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:white">Remover ${name}?</span>`,
+      title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:black">Remover ${name}?</span>`,
       showCancelButton: true,
-      confirmButtonColor: '#d33',
+      confirmButtonColor: '#c9c9c9',
       cancelButtonColor: '#8c11be',
       confirmButtonText: 'Remover',
       cancelButtonText: 'Cancelar',
@@ -76,7 +77,6 @@ export default function HomePage() {
       imageUrl: trashIcon,
       imageWidth: 100,
       imageHeight: 100,
-      background:'#1f1f1f'
     }).then((result) => {
       if (result.isConfirmed) {
         DeleteTransaction(localStorage.getItem('token'), finishDelete,id);
@@ -109,7 +109,11 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1 data-test="user-name">Olá, {user}</h1>
+        <div className="user">
+          <img className="user_pic" src={userIcon} alt="" />
+          <h1 data-test="user-name">Olá, {user}</h1>
+        </div>
+        
         <BiExit data-test="logout" onClick={logout} className="logout-btn"/>
       </Header>
 
@@ -167,6 +171,18 @@ const Header = styled.header`
   margin-bottom: 15px;
   font-size: 26px;
   color: white;
+
+  .user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    img{
+      width: 40px;
+      margin-bottom: 10px;
+    }
+  }
+
   .logout-btn{
     cursor: pointer;
     transition: all 200ms;
@@ -252,6 +268,7 @@ const ListItemContainer = styled.li`
     cursor: pointer;
     &:hover{
       color: #8c11be;
+      text-decoration: underline;
     }
   }
 

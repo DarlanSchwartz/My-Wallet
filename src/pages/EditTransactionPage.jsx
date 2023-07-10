@@ -6,6 +6,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import { toast } from "react-toastify";
 import savingsImage from '/savings.svg';
 import giftsImage from '/gifts.svg';
+import {IoIosReturnLeft} from 'react-icons/io';
 
 export default function EditTransactionPage() {
 
@@ -58,6 +59,7 @@ export default function EditTransactionPage() {
         <button disabled={loading} className="update-btn" data-test="registry-save" >{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Atualizar '}{!loading && (tipo == 'entrada'? 'entrada' : 'saída')}</button>
       </form>
       <img className="ilustration" src={tipo == 'entrada' ? savingsImage : giftsImage} alt="" />
+      <button className="back-btn" onClick={()=> navigate('/home')}><IoIosReturnLeft/></button>
     </TransactionsContainer>
   )
 }
@@ -68,6 +70,19 @@ const TransactionsContainer = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+ 
+  .back-btn{
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 50%;
+  }
+
 
   .ilustration{
     width: 100%;
