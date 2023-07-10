@@ -103,7 +103,7 @@ export default function HomePage() {
 
   function editTransaction(id,tipo,value,description)
   {
-    navigate(`/editar-registro/${tipo}`,{state:`${value},${description},${id}`})
+    navigate(`/editar-registro/${tipo}/${id}`,{state:`${value},${description}`})
   }
 
   return (
