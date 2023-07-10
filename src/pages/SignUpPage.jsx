@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { ThreeDots } from 'react-loader-spinner';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import signupImage from '/signup.svg';
 
 export default function SignUpPage() {
   const email  = useRef();
@@ -63,7 +64,7 @@ export default function SignUpPage() {
         <input data-test="conf-password" ref={password2} required placeholder="Confirme a senha" type="password" autoComplete='true' name="password2" id="password2" minLength={3}/>
         <button disabled={loading} className="sign-up-btn" data-test="sign-up-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Cadastrar'}</button>
       </form>
-
+      <img className="background" src={signupImage} alt="" />
       <Link to={'/'}>
         Já tem uma conta? Entre agora!
       </Link>
@@ -85,5 +86,20 @@ const SingUpContainer = styled.section`
       justify-content: center;
       width: 100%;
     }
+    z-index: 1;
+  }
+
+  a{
+    z-index: 1;
+  }
+
+  .background{
+    position: fixed;
+    height: 90%;
+    z-index: 0;
+    opacity: 30%;
+    bottom: 0;
+    pointer-events: none;
+    user-select: none;
   }
 `

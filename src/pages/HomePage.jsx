@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import trashIcon from '/trash.png';
+import logoutIcon from '/logout.svg';
 
 export default function HomePage() {
 
@@ -42,7 +43,7 @@ export default function HomePage() {
   function logout()
   {
     Swal.fire({
-      title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:white">Deseja sair?</span>`,
+      title: `<span style="font-family: 'Raleway', sans-serif;font-size: 20px;color:black">Deseja sair?</span>`,
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#8c11be',
@@ -50,10 +51,9 @@ export default function HomePage() {
       cancelButtonText: 'Cancelar',
       width: 300,
       heightAuto: false,
-      imageUrl: trashIcon,
-      imageWidth: 100,
+      imageUrl: logoutIcon,
+      imageWidth: 200,
       imageHeight: 100,
-      background:'#1f1f1f',
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem('token');

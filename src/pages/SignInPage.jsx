@@ -4,7 +4,7 @@ import MyWalletLogo from "../components/MyWalletLogo";
 import { useRef, useState } from "react";
 import { Login } from "../requests";
 import { ThreeDots } from 'react-loader-spinner';
-
+import signupImage from '/signup.svg';
 
 export default function SignInPage() {
 
@@ -46,7 +46,7 @@ export default function SignInPage() {
           <input data-test="password" required placeholder="Senha" type="password" autoComplete = 'true' ref={password} name="password" id="password"/>
           <button disabled={loading} className="sign-in-btn" data-test="sign-in-submit">{loading && <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} />}{!loading && 'Entrar'}</button>
       </form>
-
+    <img className="background" src={signupImage} alt="" />
       <Link to={'/cadastro'}>
         Primeira vez? Cadastre-se!
       </Link>
@@ -67,6 +67,20 @@ const SingInContainer = styled.section`
       justify-content: center;
       width: 100%;
     }
-   
+    z-index: 1;
+  }
+
+  a{
+    z-index: 1;
+  }
+
+  .background{
+    position: fixed;
+    height: 90%;
+    z-index: 0;
+    opacity: 30%;
+    bottom: 0;
+    pointer-events: none;
+    user-select: none;
   }
 `
